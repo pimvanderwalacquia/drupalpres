@@ -144,6 +144,13 @@ class: center, top, toc
 .center[![showcases shot](showcase.png)]
 
 ---
+## Drupal versions
+
+* Drupal 6 (2008)
+* Drupal 7 (2011)
+* Drupal 8 (2015)
+
+---
 ## Top complaints
 * bad queries
 * 'views'
@@ -153,6 +160,7 @@ class: center, top, toc
 
 ## MySQL at Acquia
 * all AWS EC2
+* Percona Server 5.5 (working on upgrades)
 * EBS backed MySQL (slowww disks)
 * master-master (active-passive)
 * dns-based failover
@@ -193,27 +201,35 @@ I love bunnies
 ![Derpal map](drupalmap.png)
 
 ---
+## Drupal things - Views
+* Views is a query builder
+* Defaults to left joins
+* Views can use other views (sub queries)
 
-## Drupal things
-* Views
-  - pagination hurts
+---
+## Drupal things - Views
+* pagination hurts
 
 ![Pager](needspager.png)
 
 ---
-
-## Drupal things
-* Views
-  - pagination hurts
-    * https://www.drupal.org/project/views_litepager 
-    * https://www.drupal.org/project/views_load_more
+## Drupal things - Views
+* pagination hurts
+  - https://www.drupal.org/project/views_litepager 
+  - https://www.drupal.org/project/views_load_more
 
 ---
-## Drupal things
-* Custom fields
-  - each custom field is stored in a separate table
-  - updating 10 custom fields mean updating 10 records
-  - lots of joins
+## Drupal things - Custom fields
+* Drupal 6: Custom fields grouped together in tables
+* Drupal 7: A separate table per custom field
+* Drupal 8: A separate table per custom field
+
+---
+## Drupal things - Custom fields
+Drupal 7 and 8:
+* each custom field is stored in a separate table
+* updating 10 custom fields mean updating 10 records
+* lots of joins
 
 ![Custom](custom-fields.png)
 
@@ -232,6 +248,14 @@ I love bunnies
 * semaphore   -> sometimes memcached
 * variable    -> investigate contents
 * watchdog    -> send to file
+
+---
+## Common tables - cache_form
+* cache_form table stores state between pages
+  - Filters, shopping cart, etc.
+* Views store the views object
+  - In drupal 7 they can add too much data, fixed in Drupal 8
+* cache_form expiration job
 
 ---
 ## Common tables
