@@ -110,6 +110,9 @@ name: section-begin
 
 # And by _hug_ -- I mean bodyslam
 
+??? 
+
+Drupal can really abuse a database
 
 ---
 
@@ -132,16 +135,24 @@ class: center, top, toc
 
 <!-- make system and traffic as common issues -->
 
+???
+
+hmmm? system and traffic as common issues? 
+
 ---
 
 ## What is Drupal?
 
 * a Content Management System
-* kind of like the Linux kernel
-  * if the kernel were entirely in a database
 * you probably have been on a drupal site, today even
   * https://www.drupal.com/showcases 
 .center[![showcases shot](showcase.png)]
+
+???
+
+As a very flexible CMS, it can either be really lean or bloated with modules. 
+We host thousands of Drupal sites, and they all look and perform very differently from each other. 
+
 
 ---
 ## Drupal versions
@@ -150,11 +161,20 @@ class: center, top, toc
 * Drupal 7 (2011)
 * Drupal 8 (2015)
 
+???
+
+Drupal 8 was released very recently. Most of the sites we host are on version 7
+
 ---
 ## Top complaints
 * bad queries
 * 'views'
 * misinformation 
+
+???
+
+* When people hear that I work with Drupal and they are aware at all of what the queries can look like, I often get semi-disgusted responses. Drupal views is a query builder and it doesn't always build the most beautiful queries. 
+* I also had one person 'inform me' that Drupal couldn't use InnoDB -- telling me the story of how their site broke when they tried. Whatever happened for them, completely ruined their opinion of Drupal. I've been with Drupal since version 5, and I can safely say I have never had it 'not work' on InnoDB. 
 
 ---
 
@@ -165,6 +185,10 @@ class: center, top, toc
 * master-master (active-passive)
 * dns-based failover
 * thousands of db servers, 2.3 DBAs
+
+???
+
+some stuff here about stuff
 
 ---
 
@@ -178,7 +202,9 @@ class: center, top, toc
 
 ???
 
-I love bunnies
+* The biggest performance tip is 'Caching'
+* Drupal basically loads websites from the database. Cache more, hit the database less.
+
 
 
 ---
@@ -190,21 +216,38 @@ I love bunnies
 * Modules
 * Custom fields
 
+???
+
+* these are the basic components of a drupal web page. 
+
 ---
 
 ## Drupal things: a page
 ![Derpal](drupalplain.png)
+
+???
+
+* here is a recent version of the acquia dot com page
 
 ---
 
 ## Drupal things: a page
 ![Derpal map](drupalmap.png)
 
+???
+
+* here are those basic drupal components on the acquia dot com web page
+
+
 ---
 ## Drupal things - Views
 * Views is a query builder
 * Defaults to left joins
 * Views can use other views (sub queries)
+
+???
+
+there should be an example on the next slide of a views-style query with left joins... the classic... pagination!
 
 ---
 ## Drupal things - Views
