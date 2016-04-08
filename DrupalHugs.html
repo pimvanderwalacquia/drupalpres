@@ -84,7 +84,7 @@
 
 layout: true
 <div class="acquia-header"><img src="acquia_logo.png" style="height: 25px;"/></div>
-<div class="acquia-footer"><span>Emily Slocombe</span></div>
+<div class="acquia-footer"><span>Emily Slocombe and Pim van der Wal</span></div>
 
 
 ---
@@ -129,15 +129,14 @@ class: center, top, toc
 | Caching                    |
 | Drupal things              |
 | Common tables              |
-| System issues              |
-| Traffic issues             |
+| Common issues              |
 | Your role                  |
 
 <!-- make system and traffic as common issues -->
 
 ???
 
-hmmm? system and traffic as common issues? 
+stuff 
 
 ---
 
@@ -150,6 +149,7 @@ hmmm? system and traffic as common issues?
 
 ???
 
+GET NEW SCREENSHOT !
 As a very flexible CMS, it can either be really lean or bloated with modules. 
 We host thousands of Drupal sites, and they all look and perform very differently from each other. 
 
@@ -277,38 +277,69 @@ Drupal 7 and 8:
 ![Custom](custom-fields.png)
 
 ---
+## Common tables - Drupal 8 ERD
+<img src="Drupal8_UPsitesWeb_Schema_10-19-2013.png"  style="width: 100%;"/>
+
+
+
+---
 ## Common tables
 * cache*
 * cache_form
+* field_*
+* field_revision* 
+* node
 * semaphore
 * variable
 * watchdog
 
+
 ---
 ## Common tables
 * cache*      -> memcached
-* cache_form  -> possibly compression, make sure cron runs
+* cache_form  -> possibly compression
+* field_*
+* field_revision* 
+* node
 * semaphore   -> sometimes memcached
 * variable    -> investigate contents
 * watchdog    -> send to file
+
+???
+* cache_form records get way too big. Fixed in d8, working on a fix to d7
+* watchdog not necessarily bad, but there a lot of customers that write every lasy bit of info, so it can get too much traffic.
+
 
 ---
 ## Common tables - cache_form
 * cache_form table stores state between pages
   - Filters, shopping cart, etc.
 * Views store the views object
-  - In drupal 7 they can add too much data, fixed in Drupal 8
+  - In Drupal 7 they can add too much data, fixed in Drupal 8
 * cache_form expiration job
+* compression sometimes helps
+* Drupal cron purge needs to run
 
 ---
 ## Common tables
 ![new relic 1](nr1.png)
+
+???
+
+many of our customers use New Relic. Here, they might choose to blame the database for a performance issue.
+
+<!-- cyclist db photo -->
+
 ---
 ## Common tables
 ![new relic 2](nr2.png)
 
+???
+
+Here we see, perhaps, cache_form is having trouble
+
 ---
-## System issues
+## Common issues: System 
 * upsize/downsize
   - innodb buffer pool -> memory
   - cpu bound
@@ -317,36 +348,36 @@ Drupal 7 and 8:
   - hard limit of io capacity
 
 ---
-## System issues
+## Common issues: System 
 ![inorite1](inno-reads.png)
 
 ---
-## System issues
+## Common issues: System 
 ![inorite2](qps.png)
 ![inorite3](system.png)
 ![inorite3](sdm.png)
 
 ---
-## System issues
+## Common issues: System 
 ![inno-hell-no](inno-no.png)
 * sometimes we don't fix it
 
 ---
-## System issues - Furious flushing
+## Common issues: System  - Furious flushing
 <img src="furious-flushing-redolog.png" alt="Drawing" style="width: 375px;"/>
 <img src="furious-flushing-iops.png" alt="Drawing" style="width: 375px;"/>
 <img src="furious-flushing-readwrite.png" alt="Drawing" style="width: 375px;"/>
 <img src="furious-flushing-innodbwrites.png" alt="Drawing" style="width: 375px;"/>
 
 ---
-## System issues - Query Cache
+## Common issues: System  - Query Cache
 <img src="qc1-qcusage.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-hitrate.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-prunes.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-temptables.png" alt="Drawing" style="width: 375px;"/>
 
 ---
-## System issues - Long Transactions
+## Common issues: System - Long Transactions
 <img src="trx-trx.png" alt="Drawing" style="width: 375px;"/>
 <img src="trx-runningthreads.png" alt="Drawing" style="width: 375px;"/>
 <img src="trx-historylist.png" alt="Drawing" style="width: 375px;"/>
@@ -354,7 +385,7 @@ Drupal 7 and 8:
 
 ---
 
-## Traffic issues
+## Common issues: Traffic 
 * deploy with cache clear (drush cc all)
 * crawlers
 * lots of admin edits
@@ -362,12 +393,12 @@ Drupal 7 and 8:
 * query cache
 
 ---
-## Traffic issues
+## Common issues: Traffic 
 ![deflect](bounce.gif)
 
 ---
 
-## Traffic issues
+## Common issues: Traffic 
 * deploy with cache clear (drush cc all)
   - maint mode
 * crawlers
