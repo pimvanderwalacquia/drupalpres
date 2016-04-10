@@ -157,13 +157,15 @@ We host thousands of Drupal sites, and they all look and perform very differentl
 ---
 ## Drupal versions
 
+* Initial release in 2000
 * Drupal 6 (2008)
 * Drupal 7 (2011)
 * Drupal 8 (2015)
 
 ???
 
-Drupal 8 was released very recently. Most of the sites we host are on version 7
+* Drupal 8 was released very recently. Most of the sites we host are on version 7.
+* Acquia still hosts Drupal 6, 7 and 8 sites.
 
 ---
 ## Top complaints
@@ -251,28 +253,54 @@ there should be an example on the next slide of a views-style query with left jo
 
 ---
 ## Drupal things - Views
-* pagination hurts
+* Pagination hurts
 
 ![Pager](needspager.png)
 
+???
+
+* Subquery
+* 3 left joins
+* No limit
+
 ---
 ## Drupal things - Views
-* pagination hurts
-  - https://www.drupal.org/project/views_litepager 
-  - https://www.drupal.org/project/views_load_more
+* Pagination hurts
+  - Views Litepager (https://www.drupal.org/project/views_litepager)
+  - Views Load More (https://www.drupal.org/project/views_load_more)
+
+???
+
+Both modules do not show a count and do not allow to go to last page.
+
+---
+## Drupal things - Variables
+* Cache stampede
+  - https://www.drupal.org/project/variables_that_suck_less
+* Variable contention
+![Stampede](stampede-1.png)
+
+???
+
+* Drupal variables are cached so a cache clear and lead each thread to recache the entire variable table
+* Modules misuse the variable table for storing javascript and css file info for each page
+
+TODO: discuss this last one with Mark S
 
 ---
 ## Drupal things - Custom fields
 * Drupal 6: Custom fields grouped together in tables
-* Drupal 7: A separate table per custom field
-* Drupal 8: A separate table per custom field
+* Drupal 7: A separate table per custom field<br>
+Fields can be shared across content types
+* Drupal 8: A separate table per custom field<br>
+Fields cannot be shared across content types
 
 ---
 ## Drupal things - Custom fields
 Drupal 7 and 8:
-* each custom field is stored in a separate table
-* updating 10 custom fields mean updating 10 records
-* lots of joins
+* Each custom field is stored in a separate table
+* Updating 10 custom fields mean updating 10 records
+* Lots of joins
 
 ![Custom](custom-fields.png)
 
@@ -317,8 +345,14 @@ Drupal 7 and 8:
 * Views store the views object
   - In Drupal 7 they can add too much data, fixed in Drupal 8
 * cache_form expiration job
-* compression sometimes helps
+* Compression sometimes helps
 * Drupal cron purge needs to run
+
+???
+
+* One customer wrote 1.3MB per cache_form record for ech page visit. This contained a pre-generated filter for videos.
+* Compression can help reduce the disk I/O for large records. Not a huge gain in general.
+* Purge job choice between running frequently and causing locking issues or infrequent (once per day) and taking hours to run on busy sites.
 
 ---
 ## Common tables
@@ -339,45 +373,48 @@ many of our customers use New Relic. Here, they might choose to blame the databa
 Here we see, perhaps, cache_form is having trouble
 
 ---
-## Common issues: System 
-* upsize/downsize
-  - innodb buffer pool -> memory
-  - cpu bound
-* AWS EC2 (for us)
-* innodb log file size
-  - hard limit of io capacity
+## Common issues - Capacity
+
+* Capacity issues (cpu/memory)<br>
+EC2 instance Upsize/downsize
+  - innodb buffer pool
+  - cpu cores
+* Disk I/O issues
+  - InnoDB log file size
+  - Hard limit of io capacity
+
+???
+
+* CPU cores are limited to what the version of MySQL supports
+* Log file size mostly addresses peak usage and not sustained higher usage
 
 ---
-## Common issues: System 
-![inorite1](inno-reads.png)
-
----
-## Common issues: System 
-![inorite2](qps.png)
-![inorite3](system.png)
-![inorite3](sdm.png)
-
----
-## Common issues: System 
+## Common issues - Capacity
 ![inno-hell-no](inno-no.png)
 * sometimes we don't fix it
 
 ---
-## Common issues: System  - Furious flushing
+## Common issues - Furious flushing
 <img src="furious-flushing-redolog.png" alt="Drawing" style="width: 375px;"/>
 <img src="furious-flushing-iops.png" alt="Drawing" style="width: 375px;"/>
 <img src="furious-flushing-readwrite.png" alt="Drawing" style="width: 375px;"/>
 <img src="furious-flushing-innodbwrites.png" alt="Drawing" style="width: 375px;"/>
 
+???
+
+* Yes, 600 IOPS is non-RAID spinning rust EBS
+
 ---
-## Common issues: System  - Query Cache
+## Common issues - Query Cache
 <img src="qc1-qcusage.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-hitrate.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-prunes.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-temptables.png" alt="Drawing" style="width: 375px;"/>
 
+* Drupal is supposed to be mostly reads, most customers have 99% reads
+
 ---
-## Common issues: System - Long Transactions
+## Common issues - Long Transactions
 <img src="trx-trx.png" alt="Drawing" style="width: 375px;"/>
 <img src="trx-runningthreads.png" alt="Drawing" style="width: 375px;"/>
 <img src="trx-historylist.png" alt="Drawing" style="width: 375px;"/>
