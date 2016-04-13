@@ -372,7 +372,7 @@ Drupal 7 and 8:
 
 ???
 
-* One customer wrote 1.3MB per cache_form record for ech page visit. This contained a pre-generated filter for videos.
+* One customer wrote 1.3MB per cache_form record for each page visit. This contained a pre-generated filter for videos.
 * Compression can help reduce the disk I/O for large records. Not a huge gain in general.
 * Purge job choice between running frequently and causing locking issues or infrequent (once per day) and taking hours to run on busy sites.
 
@@ -479,6 +479,7 @@ Here we see, perhaps, cache_form is having trouble
 ---
 ## Your role
 * not often fixing queries or adding indexes
+  - it is code, we can't change code
 * monitor workload
   - statsd
   - new relic
