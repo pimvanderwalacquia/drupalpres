@@ -242,8 +242,10 @@ some stuff here about stuff
 
 
 ---
-## Drupal things - Views
-* Views is a query builder
+## Drupal things - Views Module
+* Views is essentially a query builder
+* Part of Drupal Core
+* Allows non-programmers to generate SQL queries
 * Defaults to left joins
 * Views can use other views (sub queries)
 
@@ -275,25 +277,39 @@ Both modules do not show a count and do not allow to go to last page.
 
 ---
 ## Drupal things - Variables
-* Cache stampede
-  - https://www.drupal.org/project/variables_that_suck_less
+* Drupal configuration table
+* Always cached
 * Variable contention
 ![Stampede](stampede-1.png)
 
 ???
 
 * Drupal variables are cached so a cache clear and lead each thread to recache the entire variable table
-* Modules misuse the variable table for storing javascript and css file info for each page
+* Modules store aggregate js or css hash in variable table but if that is different per page it will get continuously updated
 
 TODO: discuss this last one with Mark S
 
 ---
+## Drupal things - Variables
+* Cache stampede<br>
+![Stampede2](stampede-2.gif)
+
+
+https://www.drupal.org/project/variables_that_suck_less
+
+???
+
+A cache clear causes the entire vaariable table to be loaded into cache.
+
+---
 ## Drupal things - Custom fields
 * Drupal 6: Custom fields grouped together in tables
-* Drupal 7: A separate table per custom field<br>
-Fields can be shared across content types
-* Drupal 8: A separate table per custom field<br>
-Fields cannot be shared across content types
+* Drupal 7: A separate table per custom field
+* Drupal 8: A separate table per custom field
+
+???
+
+Drupal 7 allows separate database engines to be used for custom fields. Drupal 8 does not since it wasn't being used.
 
 ---
 ## Drupal things - Custom fields
@@ -344,7 +360,6 @@ Drupal 7 and 8:
   - Filters, shopping cart, etc.
 * Views store the views object
   - In Drupal 7 they can add too much data, fixed in Drupal 8
-* cache_form expiration job
 * Compression sometimes helps
 * Drupal cron purge needs to run
 
@@ -375,23 +390,17 @@ Here we see, perhaps, cache_form is having trouble
 ---
 ## Common issues - Capacity
 
-* Capacity issues (cpu/memory)<br>
-EC2 instance Upsize/downsize
-  - innodb buffer pool
-  - cpu cores
+* CPU / memory => EC2 instance upsize
+  - Bigger InnoDB buffer pool
+  - More CPU cores<p>
 * Disk I/O issues
   - InnoDB log file size
-  - Hard limit of io capacity
+  - Hard limit of disk I/O capacity
 
 ???
 
 * CPU cores are limited to what the version of MySQL supports
 * Log file size mostly addresses peak usage and not sustained higher usage
-
----
-## Common issues - Capacity
-![inno-hell-no](inno-no.png)
-* sometimes we don't fix it
 
 ---
 ## Common issues - Furious flushing
@@ -411,7 +420,16 @@ EC2 instance Upsize/downsize
 <img src="qc1-prunes.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc1-temptables.png" alt="Drawing" style="width: 375px;"/>
 
+???
+
 * Drupal is supposed to be mostly reads, most customers have 99% reads
+
+---
+## Common issues - Query Cache
+<img src="qc2-qcusage.png" alt="Drawing" style="width: 375px;"/>
+<img src="qc2-hitrate.png" alt="Drawing" style="width: 375px;"/>
+<img src="qc2-cpu.png" alt="Drawing" style="width: 375px;"/>
+<img src="qc2-runningthreads.png" alt="Drawing" style="width: 375px;"/>
 
 ---
 ## Common issues - Long Transactions
