@@ -49,6 +49,7 @@
       
      /* acquia blue is either #29AAE1 or #27A9E0 */
      /* what in the fuck is this? oh acquia. https://confluence.acquia.com/display/UX/Color */
+     /* ok, non-archived https://confluence.acquia.com/display/UX/ADL+Style+guidelines */
       /* Header/Footer stuff */
       div.acquia-header {
         background-color: #29AAE1;
@@ -132,7 +133,7 @@ class: center, top, toc
 | Common issues              |
 | Your role                  |
 
-<!-- make system and traffic as common issues -->
+
 
 ???
 
@@ -145,7 +146,8 @@ stuff
 * a Content Management System
 * you probably have been on a drupal site, today even
   * https://www.drupal.com/showcases 
-.center[![showcases shot](showcase.png)]
+
+.center[<img src="showcase.png" width="60%">]
 
 ???
 
@@ -384,7 +386,8 @@ Drupal 7 and 8:
 
 many of our customers use New Relic. Here, they might choose to blame the database for a performance issue.
 
-<!-- cyclist db photo -->
+---
+.center[<img src="database.jpg" height="100%">]
 
 ---
 ## Common tables
@@ -454,6 +457,10 @@ Here we see, perhaps, cache_form is having trouble
 * user registrations / auth traffic  
 * query cache
 
+???
+
+* due to the nature of drupal, certain types of traffic tend to bypass caches and go straight to the db
+
 ---
 ## Common issues: Traffic 
 ![deflect](bounce.gif)
@@ -479,18 +486,14 @@ Here we see, perhaps, cache_form is having trouble
 ---
 ## Your role
 * not often fixing queries or adding indexes
-  - it is code, we can't change code
+  - it is code, we can't easily change code
 * monitor workload
   - statsd
   - new relic
   - whatever
 * provide useful feedback to developers
   - more than just slow queries
-    * modules
-    * views
-    * panels
-    * pictures, lots of pictures
-
+     * where are they being generated?
 ---
 class: left, bottom, chapter-header
 
