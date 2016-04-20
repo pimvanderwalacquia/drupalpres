@@ -377,7 +377,6 @@ Drupal 7 and 8:
   - Filters, shopping cart, etc.
 * Views store the views object
   - In Drupal 7 they can add too much data, fixed in Drupal 8
-* Compression sometimes helps
 * Drupal cron purge needs to run
 
 ???
@@ -385,6 +384,12 @@ Drupal 7 and 8:
 * One customer wrote 1.3MB per cache_form record for each page visit. This contained a pre-generated filter for videos.
 * Compression can help reduce the disk I/O for large records. Not a huge gain in general.
 * Purge job choice between running frequently and causing locking issues or infrequent (once per day) and taking hours to run on busy sites.
+
+---
+## Common tables - cache_form
+* Compression sometimes helps
+
+<p style="text-align:center"><img src="compressed-denny.png" style="width: 45%"/></p>
 
 ---
 ## Common tables
@@ -448,13 +453,6 @@ Here we see, perhaps, cache_form is having trouble
 <img src="qc2-hitrate.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc2-cpu.png" alt="Drawing" style="width: 375px;"/>
 <img src="qc2-runningthreads.png" alt="Drawing" style="width: 375px;"/>
-
----
-## Common issues - Long Transactions
-<img src="trx-trx.png" alt="Drawing" style="width: 375px;"/>
-<img src="trx-runningthreads.png" alt="Drawing" style="width: 375px;"/>
-<img src="trx-historylist.png" alt="Drawing" style="width: 375px;"/>
-<img src="trx-slow.png" alt="Drawing" style="width: 375px;"/>
 
 ---
 
@@ -522,6 +520,15 @@ class: left, bottom, chapter-header
 ---
 ## extra2 - cache_form crawler fail
 ![crawler](crawlerhittingforms.png)
+
+
+---
+## extra3 - Long Transactions
+
+<img src="trx-trx.png" alt="Drawing" style="width: 375px;"/>
+<img src="trx-runningthreads.png" alt="Drawing" style="width: 375px;"/>
+<img src="trx-historylist.png" alt="Drawing" style="width: 375px;"/>
+<img src="trx-slow.png" alt="Drawing" style="width: 375px;"/>
 
 
 <!--## Very Wise Words!
